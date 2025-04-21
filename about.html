@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tralalero Tralala - 팀 소개</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">Tralalero Tralala</div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="active">About Team</a></li>
+          <li><a href="topic.html">Topic</a></li>
+          <li><a href="tech.html">Tech Stack</a></li>
+          <li><a href="demo.html">Demo</a></li>
+        </ul>
+        <div class="hamburger">☰</div>
+      </nav>
+    </header>
+    <main>
+      <section class="team">
+        <h1>우리의 팀 - Tralalero Tralala</h1>
+        <div class="team-grid">
+          <div class="team-member">
+            <h3>신준혁</h3>
+            <p>91913672</p>
+            <p>총괄</p>
+            <p><a href="https://github.com/JunHyeokShin">GitHub</a> | <a href="https://hyk-portfolio.vercel.app/">Portfolio</a></p>
+          </div>
+          <div class="team-member">
+            <h3>송명석</h3>
+            <p>91812543</p>
+            <p>백엔드 & 블록체인 개발</p>
+            <p><a href="https://github.com/JoongBuGit">GitHub</a> | <a href="#">Portfolio</a></p>
+          </div>
+          <div class="team-member">
+            <h3>김용섭</h3>
+            <p>91906734</p>
+            <p>프론트엔드 개발</p>
+            <p><a href="https://github.com/yongseop712">GitHub</a> | <a href="#">Portfolio</a></p>
+          </div>
+          <div class="team-member">
+            <h3>최정빈</h3>
+            <p>92014289</p>
+            <p>프론트엔드 개발</p>
+            <p><a href="https://github.com/Choejungbeen">GitHub</a> | <a href="https://midtest-lime.vercel.app/">Portfolio</a></p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <p>© 2025 Tralalero Tralala. All rights reserved.</p>
+    </footer>
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

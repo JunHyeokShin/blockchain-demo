@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tralalero Tralala - 기술 스택</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">Tralalero Tralala</div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Team</a></li>
+          <li><a href="topic.html">Topic</a></li>
+          <li><a href="tech.html" class="active">Tech Stack</a></li>
+          <li><a href="demo.html">Demo</a></li>
+        </ul>
+        <div class="hamburger">☰</div>
+      </nav>
+    </header>
+    <main>
+      <section class="content">
+        <h1>사용된 기술</h1>
+        <h2>1. HTML</h2>
+        <p>- 시맨틱 태그(<code>header</code>, <code>nav</code>, <code>section</code>)로 구조화.</p>
+        <h2>2. CSS</h2>
+        <p>
+          - <strong>Grid</strong>로 반응형 레이아웃 설계.<br />
+          - 미디어 쿼리로 모바일/데스크톱 최적화.<br />
+          - 호버 애니메이션으로 사용자 경험 개선.
+        </p>
+        <h2>3. JavaScript</h2>
+        <p>
+          - 모바일 메뉴 토글, 데모 페이지의 블록체인 시뮬레이션.<br />
+          - CryptoJS 라이브러리를 활용하여 SHA-256 해시 계산.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>© 2025 Tralalero Tralala. All rights reserved.</p>
+    </footer>
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>

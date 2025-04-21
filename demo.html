@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tralalero Tralala - 블록체인 데모</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">Tralalero Tralala</div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Team</a></li>
+          <li><a href="topic.html">Topic</a></li>
+          <li><a href="tech.html">Tech Stack</a></li>
+          <li><a href="demo.html" class="active">Demo</a></li>
+        </ul>
+        <div class="hamburger">☰</div>
+      </nav>
+    </header>
+    <main>
+      <section class="demo">
+        <h1>블록체인 데모</h1>
+        <p>메시지를 입력하고 블록을 생성한 뒤, 채굴 과정을 체험해보세요!</p>
+        <div class="demo-input">
+          <input type="text" id="blockData" placeholder="메시지를 입력하세요 (예: Hello Blockchain)" />
+          <button class="btn" onclick="prepareBlock()">블록 준비</button>
+        </div>
+        <div class="mining-section" id="miningSection" style="display: none">
+          <p id="miningStatus">채굴 준비 중...</p>
+          <div class="progress-bar">
+            <div id="progress" class="progress"></div>
+          </div>
+          <button class="btn" id="mineButton" onclick="startMining()">채굴 시작</button>
+        </div>
+        <div id="blockchain" class="blockchain-container"></div>
+      </section>
+    </main>
+    <footer>
+      <p>© 2025 Tralalero Tralala. All rights reserved.</p>
+    </footer>
+    <script>
+      const hamburger = document.querySelector(".hamburger");
+      const navLinks = document.querySelector(".nav-links");
+      hamburger.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+
+      let blockchain = [];
+      let blockCount = 0;
+      let pendingBlock = null;
+      let mining = false;
+
+      function prepareBlock() {
+        const dataInput = document.getElementById("blockData").value;
+        if (!dataInput) {
+          alert("메시지를 입력해주세요!");
+          return;
+        }
+
+        const prevHash = blockchain.length > 0 ? blockchain[blockchain.length - 1].hash : "0".repeat(64);
+        pendingBlock = {
+          index: blockCount,
+          data: dataInput,
+          prevHash: prevHash,
+          nonce: 0,
+          hash: "",
+        };
+
+        document.getElementById("miningSection").style.display = "block";
+        document.getElementById("miningStatus").textContent = "채굴 준비 완료! 버튼을 눌러 시작하세요.";
+        document.getElementById("progress").style.width = "0%";
+        document.getElementById("blockData").value = "";
+      }
+
+      function calculateHash(index, data, prevHash, nonce) {
+        return CryptoJS.SHA256(index + data + prevHash + nonce).toString();
+      }
+
+      function startMining() {
+        if (!pendingBlock || mining) return;
+        mining = true;
+        document.getElementById("miningStatus").textContent = "채굴 중...";
+        document.getElementById("mineButton").disabled = true;
+
+        let nonce = 0;
+        const difficulty = "00";
+        let progress = 0;
+
+        function mineStep() {
+          if (!mining) return;
+
+          pendingBlock.nonce = nonce;
+          pendingBlock.hash = calculateHash(pendingBlock.index, pendingBlock.data, pendingBlock.prevHash, nonce);
+
+          progress = Math.min((nonce / 1000) * 100, 100);
+          document.getElementById("progress").style.width = `${progress}%`;
+
+          if (pendingBlock.hash.startsWith(difficulty)) {
+            blockchain.push(pendingBlock);
+            blockCount++;
+            mining = false;
+            document.getElementById("miningStatus").textContent = `채굴 성공! Nonce: ${pendingBlock.nonce}`;
+            document.getElementById("mineButton").disabled = false;
+            document.getElementById("miningSection").style.display = "none";
+            pendingBlock = null;
+            renderBlockchain();
+          } else if (nonce >= 1000) {
+            mining = false;
+            document.getElementById("miningStatus").textContent = "채굴 실패: 너무 어렵습니다!";
+            document.getElementById("mineButton").disabled = false;
+            document.getElementById("mineButton").textContent = "다시 시도";
+          } else {
+            nonce++;
+            setTimeout(mineStep, 50);
+          }
+        }
+
+        mineStep();
+      }
+
+      function renderBlockchain() {
+        const container = document.getElementById("blockchain");
+        container.innerHTML = "";
+        blockchain.forEach((block) => {
+          const blockElement = document.createElement("div");
+          blockElement.className = "block";
+          blockElement.innerHTML = `
+                    <h3>블록 #${block.index}</h3>
+                    <p><strong>데이터:</strong> ${block.data}</p>
+                    <p><strong>이전 해시:</strong> ${block.prevHash.substring(0, 16)}...</p>
+                    <p><strong>Nonce:</strong> ${block.nonce}</p>
+                    <p><strong>해시:</strong> ${block.hash.substring(0, 16)}...</p>
+                `;
+          container.appendChild(blockElement);
+        });
+      }
+    </script>
+  </body>
+</html>
